@@ -80,5 +80,5 @@ Contributions are welcome! Please submit a pull request with your improvements.
 
 ## Issues
 
-If you encounter any bugs or have feature suggestions, please open an issue in the [GitHub repository](https://github.com/your-repo/easyocr-js/issues).
+If you encounter any bugs or have feature suggestions, please open an issue in the [GitHub repository](https://github.com/VrajVyas11/easyocr-js/issues).
 
