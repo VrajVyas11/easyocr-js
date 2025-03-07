@@ -1,6 +1,6 @@
 {
   "name": "easyocr-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Node.js wrapper for EasyOCR",
   "main": "index.js",
   "scripts": {
