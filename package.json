@@ -1,0 +1,30 @@
+{
+  "name": "easyocr-js",
+  "version": "1.0.1",
+  "description": "A Node.js wrapper for EasyOCR",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node install-deps.js"
+  },
+  "keywords": [
+    "ocr",
+    "easyocr",
+    "optical-character-recognition",
+    "image-processing",
+    "text-extraction",
+    "document-analysis",
+    "python-wrapper",
+    "image-to-text"
+  ],
+  "dependencies": {
+    "child_process": "^1.0.2"
+  },
+  "bin": {
+    "easyocr-wrapper": "./index.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Vraj Vyas",
+  "license": "MIT"
+}
