@@ -9,7 +9,7 @@ reader = None
 
 def init_reader(languages):
     global reader
-    reader = easyocr.Reader(languages.split(','))
+    reader = easyocr.Reader(languages.split(','),gpu=True)
     return json.dumps({"status": "success", "message": "Reader initialized"})
 
 def read_text(image_path):

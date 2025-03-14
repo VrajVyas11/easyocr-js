@@ -1,8 +1,9 @@
 {
   "name": "easyocr-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Node.js wrapper for EasyOCR",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "postinstall": "node install-deps.js"
   },
@@ -16,9 +17,7 @@
     "python-wrapper",
     "image-to-text"
   ],
-  "dependencies": {
-    "child_process": "^1.0.2"
-  },
+  "dependencies": {},
   "bin": {
     "easyocr-wrapper": "./index.js"
   },

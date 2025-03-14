@@ -1,4 +1,4 @@
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
 
 function runCommand(command) {
     try {
@@ -9,7 +9,6 @@ function runCommand(command) {
     }
 }
 
-// Detect if Python is available
 function getPythonCommand() {
     try {
         execSync("python --version", { stdio: "ignore" });
@@ -28,8 +27,13 @@ function getPythonCommand() {
 const pythonCmd = getPythonCommand();
 console.log(`Using ${pythonCmd} for installation...`);
 
-// Install required Python dependencies
+// Upgrade pip
 runCommand(`${pythonCmd} -m pip install --upgrade pip`);
+
+// Install EasyOCR
 runCommand(`${pythonCmd} -m pip install easyocr`);
 
-console.log(" EasyOCR and dependencies installed successfully.");
+// Install PyTorch with CUDA support
+runCommand(`${pythonCmd} -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 --no-cache-dir`);
+
+console.log("EasyOCR with GPU support installed successfully.");
