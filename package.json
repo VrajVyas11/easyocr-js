@@ -1,6 +1,6 @@
 {
   "name": "easyocr-js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Node.js wrapper for EasyOCR",
   "main": "index.js",
   "type": "module",
@@ -10,6 +10,7 @@
   "keywords": [
     "ocr",
     "easyocr",
+    "puddleocr",
     "optical-character-recognition",
     "image-processing",
     "text-extraction",

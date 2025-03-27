@@ -1,39 +1,60 @@
 import { execSync } from "child_process";
 
 function runCommand(command) {
-    try {
-        execSync(command, { stdio: "inherit" });
-    } catch (error) {
-        console.error(`Error executing command: ${command}`, error);
-        process.exit(1);
-    }
+  try {
+    const startTime = performance.now();
+    execSync(command, { stdio: "inherit" });
+    const endTime = performance.now();
+    console.log(`[TIME] '${command}' completed in ${(endTime - startTime) / 1000}s`);
+  } catch (error) {
+    console.error(`Error executing command: '${command}'`, error.message);
+    process.exit(1);
+  }
 }
 
 function getPythonCommand() {
+  const pythonVariants = ["python", "python3", "py"];
+  for (const cmd of pythonVariants) {
     try {
-        execSync("python --version", { stdio: "ignore" });
-        return "python";
+      const version = execSync(`${cmd} --version`, { encoding: "utf-8", stdio: "pipe" });
+      console.log(`Found ${cmd}: ${version.trim()}`);
+      return cmd;
     } catch {
-        try {
-            execSync("python3 --version", { stdio: "ignore" });
-            return "python3";
-        } catch {
-            console.error("Python is not installed. Please install Python before using easyocr-wrapper.");
-            process.exit(1);
-        }
+      continue;
     }
+  }
+  console.error(
+    "Python is not installed. Please install Python (3.7-3.11 recommended) before proceeding."
+  );
+  process.exit(1);
 }
 
+console.log("Checking Python installation...");
 const pythonCmd = getPythonCommand();
 console.log(`Using ${pythonCmd} for installation...`);
 
 // Upgrade pip
 runCommand(`${pythonCmd} -m pip install --upgrade pip`);
 
-// Install EasyOCR
-runCommand(`${pythonCmd} -m pip install easyocr`);
+// Install PaddleOCR dependencies
+console.log("Installing PaddleOCR dependencies...");
+// Install PaddlePaddle (CPU version)
+runCommand(`${pythonCmd} -m pip install paddlepaddle `);
 
-// Install PyTorch with CUDA support
-runCommand(`${pythonCmd} -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 --no-cache-dir`);
+// Install PaddleOCR
+runCommand(`${pythonCmd} -m pip install paddleocr`);
 
-console.log("EasyOCR with GPU support installed successfully.");
+// Install OpenCV for preprocessing
+runCommand(`${pythonCmd} -m pip install opencv-python`);
+
+// Optional: Install PaddlePaddle with CUDA support (if GPU desired)
+try {
+  console.log("Attempting to install PaddlePaddle with CUDA support...");
+  // Note: Adjust CUDA version based on your system (e.g., cu118 for CUDA 11.8)
+  runCommand(`${pythonCmd} -m pip install paddlepaddle-gpu `);
+  console.log("PaddlePaddle with CUDA installed. Update 'use_gpu=True' in ocr.py for GPU support.");
+} catch (error) {
+  console.warn("Failed to install PaddlePaddle with CUDA. Continuing with CPU version.");
+}
+
+console.log("PaddleOCR and dependencies installed successfully!");
